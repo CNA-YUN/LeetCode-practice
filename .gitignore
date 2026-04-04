@@ -1,0 +1,7 @@
+/.vs/
+/x64/
+/*.sln
+/Leetcode/x64/
+/Leetcode/Leetcode.vcxproj
+/Leetcode/Leetcode.vcxproj.user
+/Leetcode/Leetcode.vcxproj.filters
