@@ -1,0 +1,140 @@
+#include <iostream>
+#include <vector>
+#include <string.h>
+using namespace std;
+class Robot {
+public:
+    string dir;
+    vector<int> pos;
+    vector<vector<int>>map;
+    Robot(int width, int height) {
+        pos.push_back(1);
+        pos.push_back(1);
+        dir = "East";
+
+        vector<int> col;
+		col.push_back(1);
+		for (int i = 0;i < width;i++) {
+			col.push_back(0);
+		} 
+        col.push_back(1);
+
+        vector<int> newrow(width + 2, 1);
+        map.push_back(newrow);
+        for (int i = 0;i < height;i++) {
+            map.push_back(col);
+        }
+        map.push_back(newrow);
+        
+        
+    }
+
+    void step(int num) {
+        for (int i = 1;i <= num;i++) {
+            if (dir == "North") {
+				if (map[pos[0]+1][pos[1]] == 0) {
+					pos[0]++;
+				}
+                else {
+					dir = "West";
+					pos[1]--;
+                }
+            }
+            else if (dir == "East") {
+				if (map[pos[0]][pos[1]+1] == 0) {
+					pos[1]++;
+				}
+                else {
+					dir = "North";
+					pos[0]++;
+                }
+			}
+			else if (dir == "South") {
+				if (map[pos[0]-1][pos[1]] == 0) {
+					pos[0]--;
+				}
+				else {
+					dir = "East";
+					pos[1]++;
+				}
+			}
+			else {
+				if (map[pos[0]][pos[1]-1] == 0) {
+					pos[1]--;
+				}
+				else {
+					dir = "South";
+					pos[0]--;
+				}
+			}
+        }
+    }
+
+    vector<int> getPos() {
+		vector<int> res;
+		res.push_back(pos[1] - 1);
+		res.push_back(pos[0] - 1);
+		
+		
+		return res;
+    }
+
+    string getDir() {
+		return dir;
+    }
+};
+
+/**
+ * Your Robot object will be instantiated and called as such:
+ * Robot* obj = new Robot(width, height);
+ * obj->step(num);
+ * vector<int> param_2 = obj->getPos();
+ * string param_3 = obj->getDir();
+ */
+
+
+
+
+//class Robot {
+//    int w;
+//    int h;
+//    int s = 0;
+//
+//    tuple<int, int, string> getState() {
+//        if (s < w) {
+//            return { s, 0, "East" };
+//        }
+//        else if (s < w + h - 1) {
+//            return { w - 1, s - w + 1, "North" };
+//        }
+//        else if (s < w * 2 + h - 2) {
+//            return { w * 2 + h - s - 3, h - 1, "West" };
+//        }
+//        else {
+//            return { 0, (w + h) * 2 - s - 4, "South" };
+//        }
+//    }
+//
+//public:
+//    Robot(int width, int height) : w(width), h(height) {}
+//
+//    void step(int num) {
+//        // 由于机器人只能走外圈，那么走 (w+h-2)*2 步后会回到起点
+//        // 把 s 取模调整到 [1, (w+h-2)*2]，这样不需要特判 s == 0 时的方向
+//        s = (s + num - 1) % ((w + h - 2) * 2) + 1;
+//    }
+//
+//    vector<int> getPos() {
+//        auto [x, y, _] = getState();
+//        return { x, y };
+//    }
+//
+//    string getDir() {
+//        return get<2>(getState());
+//    }
+//};
+//
+//作者：灵茶山艾府
+//链接：https ://leetcode.cn/problems/walking-robot-simulation-ii/solutions/1100443/go-mo-ni-by-endlesscheng-exyr/
+//来源：力扣（LeetCode）
+//著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
