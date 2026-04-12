@@ -1,46 +1,30 @@
-//#include <stdin.h>
-#include <algorithm>
+//定长子串中元音的最大数目
 #include <iostream>
 #include <vector>
 using namespace std;
-int judge(char c) {
-    switch (c) {
-    case 'a':
-        return 1;
-    case 'e':
-        return 1;
-    case 'i':
-        return 1;
-    case 'o':
-        return 1;
-    case 'u':
-        return 1;
-    default:
-		return 0;
-    }
-    
-}
-int maxVowels(char* s, int k) {
-    int cur = 0;
-	int len = strlen(s);
-	int res = 0;
-	int maxn = 0;
-    while (cur <= len - k) {
-		res = 0;
-        for (int i = 0; i < k; i++) {
-            if (judge(s[cur + i]))
-            {
-				res++;
+class Solution {
+public:
+    int maxVowels(string s, int k) {
+        int n = s.size();
+        int cnt = 0;
+        int res = 0;
+        int left, out;
+        bool flag = false;
+        for (int right = 0; right < n; right++) {
+            if (s[right] == 'a' || s[right] == 'e' || s[right] == 'i' ||
+                s[right] == 'o' || s[right] == 'u') {
+                cnt++;
             }
+            out = right - k;
+            if (out >= 0) {
+                if (s[out] == 'a' || s[out] == 'e' || s[out] == 'i' ||
+                    s[out] == 'o' || s[out] == 'u') {
+                    cnt--;
+                }
+            }
+
+            res = cnt > res ? cnt : res;
         }
-		maxn = max(maxn, res);
-		cur++;
+        return res;
     }
-	return maxn;
-	
-}
-void problem1456() {
-	char s[] = "abciiidef";
-	int k = 3;
-	printf("%d", maxVowels(s, k));
-}
+};
