@@ -1,23 +1,30 @@
-#include<string.h>
-#include<stdio.h>
+#include <algorithm>
+#include <cmath>
+#include <iostream>
+#include <set>
+#include <string>
+#include <unordered_map>
+#include <vector>
+using namespace std;
 
-bool isAnagram(char* s, char* t) {
-	int hash_map[26] = { 0 };
-	for (int i = 0;i < strlen(t);i++) {
-		hash_map[t[i] - 97]++;
-	}
-	for (int i = 0;i < strlen(s);i++) {
-		hash_map[s[i] - 97]--;
-	}
-	for (int i = 0;i < 26;i++) {
-		if (hash_map[i] != 0) {
-			return false;
-		}
-	}
-	return true;
-}
-void problem242() {
-	char s[] = "anagram";
-	char t[] = "nagaram";
-	printf("%d", isAnagram(s, t));
-}
+class Solution {
+public:
+    bool isAnagram(string s, string t) {
+        int s_len = s.size();
+        int t_len = t.size();
+        if (s_len != t_len)
+            return false;
+        vector<int> map(26, 0);
+        for (auto& i : s) {
+            map[i - 'a']++;
+        }
+        for (auto& j : t) {
+            map[j - 'a']--;
+        }
+        for (auto& k : map) {
+            if (k != 0)
+                return false;
+        }
+        return true;
+    }
+};
