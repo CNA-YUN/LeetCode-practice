@@ -2,8 +2,8 @@
 
 #include <iostream>
 #include <vector>
-#include <set>
 #include <unordered_map>
+#include <unordered_set>
 #include <cmath>
 #include <algorithm>
 #include <string>
@@ -12,9 +12,7 @@ using namespace std;
 
 int main()
 {
-	set<int>element;
-	element.insert(0);
-	printf("%d", element.find(0) != element.end());
+	
 	return 0;
 }
 
