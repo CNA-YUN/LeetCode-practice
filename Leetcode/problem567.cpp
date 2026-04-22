@@ -22,28 +22,30 @@ public:
             return false;
         bool flag = true;
         vector<int> map(26, 0);
-
+        int less = 0;
         for (auto& i : s1) {
+            if (map[i - 'a'] == 0) {
+                less++;
+            }
             map[i - 'a']++;
         }
 
         for (int j = 0; j < len2; j++) {
             char in = s2[j];
             map[in - 'a']--;
+            if (map[in - 'a'] == 0) {
+                less--;
+            }
             int left = j - len1 + 1;
             if (left < 0)
                 continue;
-            flag = true;
-            for (auto& k : map) {
-                if (k != 0) {
-                    flag = false;
-                    break;
-                }
-            }
-            if (flag)
+            if (less == 0)
                 return true;
-
             char out = s2[left];
+
+            if (map[out - 'a'] == 0) {
+                less++;
+            }
             map[out - 'a']++;
         }
         return false;
