@@ -18,6 +18,41 @@ using namespace std;
 class Solution {
 public:
     vector<int> findSubstring(string s, vector<string>& words) {
+        int wordlen = words[0].size();
+        int windowlen = words.size() * wordlen;
+        unordered_map<string, int> targetcnt;
+        for (auto& word : words) {
+            targetcnt[word]++;
+        }
+        vector<int> ans;
+        for (int start = 0; start < wordlen; start++) {
+            unordered_map<string, int> cnt;
+            int overload = 0;
+            for (int right = start + wordlen; right <= s.size();
+                right += wordlen) {
+                string in_word =
+                    s.substr(right - wordlen,
+                        wordlen); // 从right-wordlen开始,取wordlen个字符
+                if (cnt[in_word] == targetcnt[in_word]) {
+                    overload++;
+                }
+                cnt[in_word]++;
+                int left = right - windowlen;
+                if (left < 0) {
+                    continue;
+                }
 
+                if (overload == 0) {
+                    ans.push_back(left);
+                }
+
+                string out_word = s.substr(left, wordlen);
+                cnt[out_word]--;
+                if (cnt[out_word] == targetcnt[out_word]) {
+                    overload--;
+                }
+            }
+        }
+        return ans;
     }
 };
